@@ -122,11 +122,38 @@ EventSchema.pre("save", function () {
 
   // Normalize date to ISO format if modified
   if (this.isModified("date")) {
-    const parsedDate = new Date(this.date);
-    if (isNaN(parsedDate.getTime())) {
-      throw new Error("Date must be a valid date string");
+    // Validate YYYY-MM-DD format
+    const isoDateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
+    const match = this.date.trim().match(isoDateRegex);
+
+    if (!match) {
+      throw new Error("Date must be in YYYY-MM-DD format");
     }
-    this.date = parsedDate.toISOString().split("T")[0]; // YYYY-MM-DD format
+
+    const year = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10);
+    const day = parseInt(match[3], 10);
+
+    // Validate date components
+    if (month < 1 || month > 12) {
+      throw new Error("Month must be between 01 and 12");
+    }
+    if (day < 1 || day > 31) {
+      throw new Error("Day must be between 01 and 31");
+    }
+
+    // Create UTC date and validate it's a real date (handles Feb 30, etc.)
+    const utcDate = new Date(Date.UTC(year, month - 1, day));
+    if (
+      utcDate.getUTCFullYear() !== year ||
+      utcDate.getUTCMonth() !== month - 1 ||
+      utcDate.getUTCDate() !== day
+    ) {
+      throw new Error("Invalid date (e.g., February 30th does not exist)");
+    }
+
+    // Store normalized YYYY-MM-DD format
+    this.date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   }
 
   // Normalize time format to HH:MM if modified
