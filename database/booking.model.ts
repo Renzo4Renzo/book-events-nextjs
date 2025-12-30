@@ -60,7 +60,7 @@ BookingSchema.pre("save", async function () {
 BookingSchema.index({ eventId: 1 });
 
 // Compound index for finding unique bookings (optional: prevent duplicate bookings)
-BookingSchema.index({ eventId: 1, email: 1 });
+BookingSchema.index({ eventId: 1, email: 1 }, { unique: true });
 
 // Export model, reuse existing model in development to prevent OverwriteModelError
 const Booking = models.Booking || model<IBooking>("Booking", BookingSchema);
