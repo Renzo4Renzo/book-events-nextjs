@@ -64,10 +64,10 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
           <section className="flex-col-gap-2">
             <h2>Event Details</h2>
             <EventDetailItem icon="/icons/calendar.svg" alt="calendar" label={date} />
-            <EventDetailItem icon="/icons/clock.svg" alt="calendar" label={time} />
-            <EventDetailItem icon="/icons/pin.svg" alt="calendar" label={location} />
-            <EventDetailItem icon="/icons/mode.svg" alt="calendar" label={mode} />
-            <EventDetailItem icon="/icons/audience.svg" alt="calendar" label={audience} />
+            <EventDetailItem icon="/icons/clock.svg" alt="clock" label={time} />
+            <EventDetailItem icon="/icons/pin.svg" alt="pin" label={location} />
+            <EventDetailItem icon="/icons/mode.svg" alt="mode" label={mode} />
+            <EventDetailItem icon="/icons/audience.svg" alt="audience" label={audience} />
           </section>
 
           <EventAgenda agendaItems={JSON.parse(agenda[0])} />

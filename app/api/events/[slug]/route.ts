@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: RouteParams): Promis
       return NextResponse.json({ message: "Slug parameter is required" }, { status: 400 });
     }
 
-    // Validate slug format (alphanumeric, hyphens, min 1 char, max 200 chars)
+    // Validate slug format (alphanumeric, hyphens, min 1 char, max 500 chars)
     const slugRegex = /^[a-z0-9-]{1,500}$/;
     if (!slugRegex.test(slug)) {
       return NextResponse.json(
