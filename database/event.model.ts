@@ -184,9 +184,6 @@ EventSchema.pre("save", function () {
   }
 });
 
-// Create index on slug for faster queries
-EventSchema.index({ slug: 1 });
-
 // Export model, reuse existing model in development to prevent OverwriteModelError
 const Event = models.Event || model<IEvent>("Event", EventSchema);
 
